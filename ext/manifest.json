@@ -20,7 +20,7 @@
     "contentSettings",
     "notifications",
     "*://*.9gag.com/*",
-     "activeTab", "tabs", "webNavigation", "webRequest","webRequestBlocking"
+     "activeTab", "tabs", "webNavigation", "webRequest","webRequestBlocking","storage" 
   ],
   "content_scripts": [
     {

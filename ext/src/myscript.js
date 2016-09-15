@@ -11,6 +11,8 @@ var subcribeBtn = document.createElement("a");
 subcribeBtn.className = 'reply subcribe';
 subcribeBtn.text = 'Subcribe';
 
+var extensionId = document.getElementById('9gagAwersome').getAttribute("extensionId");
+
 (function() {
     var XHR = XMLHttpRequest.prototype;
     var open = XHR.open;
@@ -66,6 +68,11 @@ var subcribeToUser = function(e) {
 
     var user = userElement.text();
     var userRef = userElement.attr('href');
+
+    // Page context
+    var message = {method: "subcribeToUser", 'user': user , 'ref': userRef};
+    var event = new CustomEvent("subcribeToUser", {detail: message});
+    window.dispatchEvent(event);
 };
 
 function hasClass(ele, cls) {

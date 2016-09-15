@@ -3,14 +3,7 @@
 // var settings = new Store("settings", {
 //     "sample_setting": "This is how you use Store.js to remember values"
 // });
-debugger;
 
-//example of using a message handler from the inject scripts
-chrome.extension.onMessage.addListener(
-  function(request, sender, sendResponse) {
-  	chrome.pageAction.show(sender.tab.id);
-    sendResponse();
-  });
 
 chrome.webRequest.onCompleted.addListener(function(details){
  if(details.url.indexOf('comment-list.json')>0){
@@ -22,3 +15,34 @@ chrome.webRequest.onCompleted.addListener(function(details){
  );
 
 
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+	debugger;
+    if (request.method == "subcribeToUser"){
+    	chrome.storage.sync.get('subcribeList',function (obj) {
+    		if (obj && obj.subcribeList && obj.subcribeList.length) {
+    			if (!contains(obj.subcribeList, request.user)) {
+    				obj.subcribeList.push({'user': request.user , 'ref': request.ref });
+    				chrome.storage.sync.set(obj);
+    				}
+    			}else{
+    			chrome.storage.sync.set({'subcribeList' : [ {'user': request.user , 'ref': request.ref } ]});
+    		}
+		})
+    	//chrome.storage.sync.set({'user': request.user , 'ref': request.userRef });    
+    }
+    else
+      sendResponse({}); // snub them.
+});
+
+var contains = function(array, val){
+	var found = false;
+for(var i = 0; i < array.length; i++) {
+    if (array[i].user == val) {
+        found = true;
+        break;
+    }
+}
+return found;
+};
+
+    
