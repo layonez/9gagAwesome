@@ -1,0 +1,91 @@
+<!doctype html>
+<style type="text/css">
+	#mainPopup {
+    	height: 200px;
+   	 	width: 200px;
+    	font-family: Helvetica, Ubuntu, Arial, sans-serif;
+	}
+	a {
+		font-size: larger;
+	}
+	body {
+		padding: 0px;
+		margin: 0px;
+	}
+	#header{
+		height: 48px;
+		background-color: black;
+		text-align: center;
+		padding: 10px;
+	}
+	#hi{
+		color: white;
+		line-height: 1.5;
+    	display: inline-block;
+    	vertical-align: middle;
+    	font: 13px Helvetica Neue,Arial,Helvetica,Geneva,sans-serif;
+        -webkit-font-smoothing: antialiased;
+        font-weight: 700;
+        text-decoration: none;
+        padding-top: 15px;
+	}
+	#logo{
+		background: url('icons/header-logo.png') no-repeat;
+    	background-size: 20px 20px;
+    	position: absolute;
+    	width: inherit;
+    	top: 3px;
+    	height: 20px;
+	}
+	#subscriptionsList
+	{
+		list-style: none;
+    	padding-left: 0px;
+    	display: inline;
+	}
+	.itemContent{
+	}
+	.date > a{
+		font-size: 11px;
+    	color: #999;
+    	line-height: 16px;
+    	margin-top: 5px;
+    	vertical-align: top;
+	}
+	.date {
+		text-align: right;
+	}
+	.user{
+		color: black;
+    	font-weight: 600;  
+	}
+	.user>a{  	
+		margin-left: 5px;
+	}
+	li{
+		padding: 5px;
+    	border-bottom: 1px solid #eee;
+	}
+	li>a{
+		text-decoration: none;
+	}
+	li:hover{
+		background-color: #eee;
+	}
+	.avatar{
+		float: left;
+    	width: 35px;
+	}
+</style>
+<script type="text/javascript" src='scripts/action.js'></script>
+
+<div id="mainPopup">
+	<a id="logo"></a>
+	<div id='header'>
+		<a id='hi'>Hey dear, attack helicopter, here your subscriptions:</a>
+	</div>
+
+<ul id='subscriptionsList'>
+	
+</ul>
+</div>

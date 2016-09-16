@@ -50,16 +50,18 @@ var extensionId = document.getElementById('9gagAwersome').getAttribute("extensio
 })();
 
 var loadAllComments = function(e) {
- 	var loadButtons = $('.collapsed-comment>span');
- 	if (loadButtons.length > 0) {
- 		loadButtons.click();
- 		setTimeout(function(){ loadAllComments(); }, 200);
- 	}    
- 	var badgeLoadMore = $('.badge-load-more-trigger>span');
- 	if (badgeLoadMore.length > 0) {
- 		badgeLoadMore.click();
- 		setTimeout(function(){ loadAllComments(); }, 200);
- 	}  
+    if (!currOPdiv) {
+        var loadButtons = $('.collapsed-comment>span');
+        if (loadButtons.length > 0) {
+            loadButtons.click();
+            setTimeout(function(){ loadAllComments(); }, 200);
+        }    
+        var badgeLoadMore = $('.badge-load-more-trigger>span');
+        if (badgeLoadMore.length > 0) {
+           badgeLoadMore.click();
+          setTimeout(function(){ loadAllComments(); }, 200);
+        }  
+    } 	
 };
 
 var subcribeToUser = function(e) {
@@ -70,7 +72,7 @@ var subcribeToUser = function(e) {
     var userRef = userElement.attr('href');
 
     // Page context
-    var message = {method: "subcribeToUser", 'user': user , 'ref': userRef};
+    var message = {method: "subcribeToUser", 'user': user , 'ref': userRef, 'avatar': $( 'img',userElement.parent().parent().parent().parent())[0].src};
     var event = new CustomEvent("subcribeToUser", {detail: message});
     window.dispatchEvent(event);
 };

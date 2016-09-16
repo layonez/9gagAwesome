@@ -84,3 +84,7 @@
 	margin: 0 50%;
     -webkit-transform: rotate(38deg);
 }
+
+div.action.badge-action.subscribable > a{
+	cursor: pointer;
+}
