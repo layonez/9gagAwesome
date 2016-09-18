@@ -183,12 +183,24 @@ var highliteOP = function() {
 
 if (window.location.href.indexOf('http://9gag.com/gag') !== -1) {
     window.onload = function() {
+        debugger;
         searchDiv = document.createElement("div");
         searchDiv.id = "findOP";
         searchDiv.onclick = scrollToOP;
         searchDiv.title = "Can't find OP";
         searchDiv.className += " noOP";
         document.body.insertBefore(searchDiv, document.body.childNodes[0]);
+
+        var dickbutt = document.createElement("img");
+        dickbutt.className = 'dickbutt';
+        dickbutt.src = 'chrome-extension://' + extensionId + '/icons/dbutt.gif';
+        searchDiv.appendChild(dickbutt);
+
+        var travolta = document.createElement("img");
+        travolta.className = 'travolta';
+        travolta.src = 'chrome-extension://' + extensionId + '/icons/where.gif';
+        searchDiv.appendChild(travolta);
+
  		
  		var textDiv = document.createElement("div");
  		textDiv.id = "searchTooltip";

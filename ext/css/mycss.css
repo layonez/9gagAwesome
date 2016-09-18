@@ -18,6 +18,8 @@
 
     font-size: 12px;
     font-weight: 700;
+
+    cursor: pointer;
 }
 
 #searchTooltip{
@@ -30,19 +32,34 @@
 	-webkit-border-radius: 30px;
 	opacity:0;
 }
-#findOP:hover div{
-	opacity:0.6;
-	text-align:justify;
+#findOP:hover{
+	transform: scale(1.05); 
 }
-
-.noOP{
-	background: url('chrome-extension://__MSG_@@extension_id__/icons/where.gif');	
+#findOP:active{
+	transform: scale(1); 
+}
+.noOP > .dickbutt{
+	display: none;
     background-position-x: -17px;
-
 }
+.dickbutt{
+	width: 80px;
+    height: 60px;
+    margin-left: -10px;
+}
+.travolta{
+	width: 60px;
+    border-radius: 30px;
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(0, 0, 0);
+    margin-left: -2px;
+    margin-top: -2px;
+}
+    
 
-.haveOP{
-	background: url('chrome-extension://__MSG_@@extension_id__/icons/dbutt.gif');
+.haveOP > .travolta{
+	display: none;
     background-position-x: -20px;
 }
 

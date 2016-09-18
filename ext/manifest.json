@@ -24,6 +24,7 @@
   "permissions": [
     "contentSettings",
     "notifications",
+    "alarms",
     "*://*.9gag.com/*",
      "activeTab", "tabs", "webNavigation", "webRequest","webRequestBlocking","storage" 
   ],
