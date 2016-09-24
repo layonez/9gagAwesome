@@ -1,39 +1,38 @@
 {
-  "name": "AWESOME 9GAG",
-  "version": "0.0.1",
-  "manifest_version": 2,
-  "description": "Make 9gag great again!",
-  "homepage_url": "http://9gag.com",
-  "icons": {
-    "16": "icons/icon16.png",
-    "48": "icons/icon48.png",
-    "128": "icons/icon128.png"
-  },
-  "default_locale": "en",
-  "browser_action": {
-    "default_title": "Make 9gag great again!",
-    "default_popup": "src/browser_action/browser_action.html"
-  },
-  
-  "background": {
-    "scripts": [
-      "src/bg/background.js"      
+    "name": "AWESOME 9GAG",
+    "version": "0.0.1",
+    "manifest_version": 2,
+    "description": "Make 9gag great again!",
+    "homepage_url": "http://9gag.com",
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "default_locale": "en",
+    "browser_action": {
+        "default_title": "Make 9gag great again!",
+        "default_popup": "src/browser_action/browser_action.html"
+    },
+
+    "background": {
+        "scripts": [
+            "src/bg/background.js"
+        ],
+        "persistent": true
+    },
+    "permissions": [
+        "contentSettings",
+        "notifications",
+        "alarms",
+        "*://*.9gag.com/*",
+        "activeTab", "tabs", "webNavigation", "webRequest", "webRequestBlocking", "storage"
     ],
-    "persistent": true
-  },
-  "permissions": [
-    "contentSettings",
-    "notifications",
-    "alarms",
-    "*://*.9gag.com/*",
-     "activeTab", "tabs", "webNavigation", "webRequest","webRequestBlocking","storage" 
-  ],
-  "content_scripts": [
-    {
-      "matches": ["*://www.9gag.com/*","*://9gag.com/*"],
-      "js": ["src/inject.js"],"run_at": "document_start",
-      "css": ["css/mycss.css"] 
-    }
-  ],
-  "web_accessible_resources": ["icons/dbutt.gif","icons/where.gif","src/myscript.js","js/jquery/jquery.min.js"]
+    "content_scripts": [{
+        "matches": ["*://www.9gag.com/*", "*://9gag.com/*"],
+        "js": ["src/inject.js"],
+        "run_at": "document_start",
+        "css": ["css/mycss.css"]
+    }],
+    "web_accessible_resources": ["icons/dbutt.gif", "icons/where.gif", "src/myscript.js", "js/jquery/jquery.min.js"]
 }

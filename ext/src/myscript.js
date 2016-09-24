@@ -33,12 +33,12 @@ var extensionId = document.getElementById('9gagAwersome').getAttribute("extensio
                 if (!opId) {
                     opId = 'Admin post'
                     var op = document.getElementById('op');
-    				if (!op) {
-    					var pan = $('.badge-entry-info.post-afterbar-meta>p');
-						op = document.createElement("a");	
-           				pan.append(op);
-           				op.id = 'op';
-    				}
+                    if (!op) {
+                        var pan = $('.badge-entry-info.post-afterbar-meta>p');
+                        op = document.createElement("a");
+                        pan.append(op);
+                        op.id = 'op';
+                    }
                     op.text = opId;
                     var pan = $('.badge-entry-info.post-afterbar-meta>p');
                     pan.append(op);
@@ -54,14 +54,14 @@ var loadAllComments = function(e) {
         var loadButtons = $('.collapsed-comment>span');
         if (loadButtons.length > 0) {
             loadButtons.click();
-            setTimeout(function(){ loadAllComments(); }, 200);
-        }    
+            setTimeout(function() { loadAllComments(); }, 200);
+        }
         var badgeLoadMore = $('.badge-load-more-trigger>span');
         if (badgeLoadMore.length > 0) {
-           badgeLoadMore.click();
-          setTimeout(function(){ loadAllComments(); }, 200);
-        }  
-    } 	
+            badgeLoadMore.click();
+            setTimeout(function() { loadAllComments(); }, 200);
+        }
+    }
 };
 
 var subcribeToUser = function(e) {
@@ -72,8 +72,8 @@ var subcribeToUser = function(e) {
     var userRef = userElement.attr('href');
 
     // Page context
-    var message = {method: "subcribeToUser", 'user': user , 'ref': userRef, 'avatar': $( 'img',userElement.parent().parent().parent().parent())[0].src};
-    var event = new CustomEvent("subcribeToUser", {detail: message});
+    var message = { method: "subcribeToUser", 'user': user, 'ref': userRef, 'avatar': $('img', userElement.parent().parent().parent().parent())[0].src };
+    var event = new CustomEvent("subcribeToUser", { detail: message });
     window.dispatchEvent(event);
 };
 
@@ -96,33 +96,33 @@ var scrollToOP = function() {
 
         var opPosts = document.getElementsByClassName('role-op');
         //;
- 		if (opPosts.length > opPostToScrollCount) {
- 			currOPdiv = opPosts[opPostToScrollCount].parentElement.parentElement.getElementsByClassName('username')[0];
- 			opPostToScrollCount++;
- 		}else{
- 			opPostToScrollCount = 0;
- 			currOPdiv = opPosts[opPostToScrollCount].parentElement.parentElement.getElementsByClassName('username')[0];
- 		}
-    }else{
-    	loadAllComments();
+        if (opPosts.length > opPostToScrollCount) {
+            currOPdiv = opPosts[opPostToScrollCount].parentElement.parentElement.getElementsByClassName('username')[0];
+            opPostToScrollCount++;
+        } else {
+            opPostToScrollCount = 0;
+            currOPdiv = opPosts[opPostToScrollCount].parentElement.parentElement.getElementsByClassName('username')[0];
+        }
+    } else {
+        loadAllComments();
     }
 };
 
 var findOP = function() {
-	if (!currHref) {
-		currHref= window.location.href;
-	}else if(currHref !== window.location.href){
-		currHref = window.location.href;
-		currOPdiv = null;
-		opId = null;
-		currOP = null;
-		opIsSetted = false;
-		if ($(searchDiv).hasClass('haveOP')) {
-			$(searchDiv).removeClass('haveOP');
-			searchDiv.className += " noOP";
-			searchDiv.title = "No OP";
-		}
-	}
+    if (!currHref) {
+        currHref = window.location.href;
+    } else if (currHref !== window.location.href) {
+        currHref = window.location.href;
+        currOPdiv = null;
+        opId = null;
+        currOP = null;
+        opIsSetted = false;
+        if ($(searchDiv).hasClass('haveOP')) {
+            $(searchDiv).removeClass('haveOP');
+            searchDiv.className += " noOP";
+            searchDiv.title = "No OP";
+        }
+    }
     if (!currOPdiv) {
         var opDiv = document.getElementsByClassName('role-op')[0];
         if (opDiv) {
@@ -145,27 +145,27 @@ var addButtons = function() {
         pan.insertBefore(node, pan.childNodes[0]);
         pan.className += ' subscribable';
     });
-	var op = document.getElementById('op');
-	if (op && opIsSetted && currOP && op.text !== currOP) {
-		op.text = currOP;
-		op.href = currOPRef;
-	}else if (!opIsSetted && currOP) {    	
-    	if (!op) {
-    		var pan = $('.badge-entry-info.post-afterbar-meta>p');
-			op = document.createElement("a");	
+    var op = document.getElementById('op');
+    if (op && opIsSetted && currOP && op.text !== currOP) {
+        op.text = currOP;
+        op.href = currOPRef;
+    } else if (!opIsSetted && currOP) {
+        if (!op) {
+            var pan = $('.badge-entry-info.post-afterbar-meta>p');
+            op = document.createElement("a");
             pan.append(op);
             op.id = 'op';
-    	}
+        }
         op.text = currOP;
         op.href = currOPRef;
         opIsSetted = true;
     } else if (!opIsSetted && opId) {
-    	if (!op) {
-    		var pan = $('.badge-entry-info.post-afterbar-meta>p');
-			op = document.createElement("a");	
+        if (!op) {
+            var pan = $('.badge-entry-info.post-afterbar-meta>p');
+            op = document.createElement("a");
             pan.append(op);
             op.id = 'op';
-    	}
+        }
         op.text = opId;
         pan.append(op);
         opIsSetted = true;
@@ -201,11 +201,11 @@ if (window.location.href.indexOf('http://9gag.com/gag') !== -1) {
         travolta.src = 'chrome-extension://' + extensionId + '/icons/where.gif';
         searchDiv.appendChild(travolta);
 
- 		
- 		var textDiv = document.createElement("div");
- 		textDiv.id = "searchTooltip";
- 		textDiv.text = 'Load all comments!'
-		searchDiv.appendChild(textDiv);  
+
+        var textDiv = document.createElement("div");
+        textDiv.id = "searchTooltip";
+        textDiv.text = 'Load all comments!'
+        searchDiv.appendChild(textDiv);
 
         findOP();
         highliteOP();

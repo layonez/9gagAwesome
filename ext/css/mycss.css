@@ -1,54 +1,56 @@
 #findOP {
-	width: 60px;
-	height: 60px;
-	position: fixed;
-	z-index: 999;
-	right: 20px;
-	bottom: 20px;
-	
-	-webkit-border-radius: 30px;
-	-moz-border-radius: 30px;
-	border-radius: 30px;
-	background-size: 65px 55px;
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    z-index: 999;
+    right: 20px;
+    bottom: 20px;
+    -webkit-border-radius: 30px;
+    -moz-border-radius: 30px;
+    border-radius: 30px;
+    background-size: 65px 55px;
     border: 3px solid #000000;
     background-repeat: no-repeat;
     background-color: white;
     background-position-y: -7px;
     background-size: 100px;
-
     font-size: 12px;
     font-weight: 700;
-
     cursor: pointer;
 }
 
-#searchTooltip{
-	width: 60px;
-	height: 60px;
-	position: fixed;
-	z-index: 9999;
-	right: 20px;
-	bottom: 20px;
-	-webkit-border-radius: 30px;
-	opacity:0;
+#searchTooltip {
+    width: 60px;
+    height: 60px;
+    position: fixed;
+    z-index: 9999;
+    right: 20px;
+    bottom: 20px;
+    -webkit-border-radius: 30px;
+    opacity: 0;
 }
-#findOP:hover{
-	transform: scale(1.05); 
+
+#findOP:hover {
+    transform: scale(1.05);
 }
-#findOP:active{
-	transform: scale(1); 
+
+#findOP:active {
+    transform: scale(1);
 }
-.noOP > .dickbutt{
-	display: none;
+
+.noOP > .dickbutt {
+    display: none;
     background-position-x: -17px;
 }
-.dickbutt{
-	width: 80px;
+
+.dickbutt {
+    width: 80px;
     height: 60px;
     margin-left: -10px;
 }
-.travolta{
-	width: 60px;
+
+.travolta {
+    width: 60px;
     border-radius: 30px;
     border-width: 3px;
     border-style: solid;
@@ -56,52 +58,50 @@
     margin-left: -2px;
     margin-top: -2px;
 }
-    
 
-.haveOP > .travolta{
-	display: none;
+.haveOP > .travolta {
+    display: none;
     background-position-x: -20px;
 }
 
-.noOP::before { 
+.noOP::before {
     content: "Can't find";
     position: absolute;
     right: 17px;
-	bottom: 55px;
+    bottom: 55px;
     margin: 0 50%;
     -webkit-transform: rotate(45deg);
 }
-.noOP::after { 
+
+.noOP::after {
     content: "OP";
-    color:#00b22d;
+    color: #00b22d;
     position: absolute;
     right: 38px;
-	bottom: 48px;	
-
-	margin: 0 50%;
+    bottom: 48px;
+    margin: 0 50%;
     -webkit-transform: rotate(38deg);
 }
 
-.haveOP::before { 
+.haveOP::before {
     content: "To";
     position: absolute;
     right: 24px;
-	bottom: 54px;
-	margin: 0 50%;
+    bottom: 54px;
+    margin: 0 50%;
     -webkit-transform: rotate(45deg);
 }
 
-.haveOP::after { 
+.haveOP::after {
     content: "OP";
-    color:#00b22d;
+    color: #00b22d;
     position: absolute;
     right: 32px;
-	bottom: 40px;	
-
-	margin: 0 50%;
+    bottom: 40px;
+    margin: 0 50%;
     -webkit-transform: rotate(38deg);
 }
 
-div.action.badge-action.subscribable > a{
-	cursor: pointer;
+div.action.badge-action.subscribable > a {
+    cursor: pointer;
 }

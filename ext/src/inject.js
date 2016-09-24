@@ -12,8 +12,7 @@ s.setAttribute('id', '9gagAwersome');
 // Content script
 //Listen for the event
 window.addEventListener("subcribeToUser", function(evt) {
-  chrome.runtime.sendMessage(evt.detail);
+    chrome.runtime.sendMessage(evt.detail);
 }, false);
 
 (document.head || document.documentElement).appendChild(s);
-
