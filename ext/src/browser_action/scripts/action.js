@@ -29,41 +29,46 @@ var find = function(array, val) {
 };
 
 var removeNewPosts = function(user){
-        chrome.storage.sync.get('subcribeList', function(obj) {
-        if (obj && obj.subcribeList && obj.subcribeList.length) {
-            var userObj = find(obj.subcribeList, user);
-            userObj.newPosts = [];
-            chrome.storage.sync.set(obj);
+        chrome.storage.sync.get(user, function(obj) {
+        if (obj && obj.user) {
+            obj.newPosts = [];
+
+            var subscription = {};
+            subscription[user] = obj;
+            chrome.storage.sync.set(subscription);
         }
     })
 }
 
-
 window.onload = function() {
     var ul = document.getElementById('subscriptionsList');
+    var total = document.getElementById('total');
     while (ul.firstChild) {
         ul.removeChild(ul.firstChild);
     }
-    chrome.storage.sync.get('subcribeList', function(obj) {
-        if (obj && obj.subcribeList && obj.subcribeList.length) {
-            for (var i = 0; i < obj.subcribeList.length; i++) {
+    chrome.storage.sync.get(null, function(items) {
+        var allKeys = Object.keys(items);
+        total.text = allKeys.length - 1;
 
-                userItem = obj.subcribeList[i];
+
+        for (var i = allKeys.length - 1; i >= 0; i--) {
+            var userItem = items[allKeys[i]];
+            userItem.user = allKeys[i];
 
                 var listItem = document.createElement("li");
-                listItem.id = obj.subcribeList[i].user;
+                listItem.id = userItem.user;
                 listItem.className = 'item';
 
                 item = document.createElement("a");
                 item.className = 'itemRef';
-                item.href = obj.subcribeList[i].ref;
+                item.href = userItem.ref;
 
-                if (obj.subcribeList[i].newPosts && obj.subcribeList[i].newPosts.length) {
+                if (userItem.newPosts && userItem.newPosts.length) {
 
-                    item.newPosts = obj.subcribeList[i].newPosts;
-                    item.user = obj.subcribeList[i].user;
+                    item.newPosts = userItem.newPosts;
+                    item.user = userItem.user;
                     listItem.className += ' haveNewPosts'
-                    listItem.className += ' np' + obj.subcribeList[i].newPosts.length;
+                    listItem.className += ' np' + userItem.newPosts.length;
                     item.onclick = function(e) {
 
                         removeNewPosts(this.user);
@@ -96,7 +101,7 @@ window.onload = function() {
 
                 var img = document.createElement("img");
                 img.className = 'avatar';
-                img.src = obj.subcribeList[i].avatar;
+                img.src = userItem.avatar;
                 user.appendChild(img);
 
                 var date = document.createElement("div");
@@ -104,7 +109,7 @@ window.onload = function() {
                 itemContent.appendChild(date);
 
                 var dateA = document.createElement("a");
-                dateA.text = getTextAgo(new Date(obj.subcribeList[i].date));
+                dateA.text = getTextAgo(new Date(userItem.date));
                 date.appendChild(dateA);
 
                 var remove = document.createElement("a");
@@ -112,28 +117,23 @@ window.onload = function() {
 
                 remove.onclick = function(e) {
                     var id = e.target.parentElement.id;
+                    chrome.storage.sync.remove(id);
                     e.target.parentElement.remove();
-
-                    chrome.storage.sync.get('subcribeList', function(obj) {
-                        var user = find(obj.subcribeList, id);
-                        obj.subcribeList.splice(obj.subcribeList.indexOf(user), 1);
-                        chrome.storage.sync.set({
-                            'subcribeList': obj.subcribeList
-                        });
-                    });
+                    var total = document.getElementById('total');
+                    var count = parseInt(total.text);        
+                                total.text= count -1;
                 }
                 listItem.appendChild(remove);
 
                 var a = document.createElement("a");
-                a.text = obj.subcribeList[i].user;
+                a.text = userItem.user;
                 user.appendChild(a);
 
-                if (obj.subcribeList[i].newPosts && obj.subcribeList[i].newPosts.length && ul.firstChild) {
+                if (userItem.newPosts && userItem.newPosts.length && ul.firstChild) {
                     ul.insertBefore(listItem, ul.firstChild);
                 } else {
                     ul.appendChild(listItem);
                 }
-            }
-        }
+            }        
     });
 }

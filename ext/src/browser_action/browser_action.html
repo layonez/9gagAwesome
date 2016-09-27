@@ -24,12 +24,8 @@ body {
 
 #hi {
     color: white;
-    line-height: 1.5;
-    display: inline-block;
     vertical-align: middle;
-    font: 13px Helvetica Neue, Arial, Helvetica, Geneva, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    font-weight: 700;
+    font-weight: 600;
     text-decoration: none;
     margin-left: 10px;
 }
@@ -47,6 +43,7 @@ body {
     float: left;
     font-size: 20px;
     margin-top: -1px;
+    margin-bottom: 4px;
 }
 
 #logo {
@@ -56,6 +53,8 @@ body {
     width: inherit;
     top: 2px;
     height: 22px;
+    border-bottom: 1px solid #7d7d7d;
+    padding-bottom: 4px;
 }
 
 .remove {
@@ -83,10 +82,11 @@ body {
     padding-left: 0px;
     display: inline;
     position: absolute;
-    max-height: 250px;
+    max-height: 270px;
     overflow-y: scroll;
     overflow-x: hidden;
     margin-top: 2px;
+    border-bottom: 1px solid #e3e3e3;
 }
 
 .itemRef {
@@ -198,6 +198,20 @@ ul:empty::after {
 .np5::after {
     content: "5";
 }
+#totalDiv{
+	    text-align: right;
+}
+#total{
+	vertical-align: middle;
+    font-size: 12px;
+    color: #9f9b9b;
+}
+#total::after{
+	content: ' total';
+}
+#total:empty{
+	content: '0';
+}
 </style>
 <script type="text/javascript" src='scripts/action.js'></script>
 <div id="mainPopup">
@@ -208,4 +222,7 @@ ul:empty::after {
     </div>
     <ul id='subscriptionsList'>
     </ul>
+</div>
+<div id="totalDiv">
+	<a id="total"></a>
 </div>
