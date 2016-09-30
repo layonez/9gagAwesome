@@ -22,12 +22,24 @@ body {
     padding: 6px;
 }
 
-#hi {
-    color: white;
+#filter {
+    border-color: #cccccc;
+    border-style: solid;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    text-align: center;
+    border-width: 0px;
+    width: 188px;
+    background-color: #121212;
+    color: #ebebeb;
+    box-shadow: 0px 0px 16px 0px rgba(42, 42, 42, .77);
+    font-family: sans-serif;
     vertical-align: middle;
-    font-weight: 600;
-    text-decoration: none;
-    margin-left: 10px;
+    font-weight: 500;
+}
+
+.filter:focus {
+    outline: none;
 }
 
 #title {
@@ -57,6 +69,11 @@ body {
     padding-bottom: 4px;
 }
 
+.userName {
+    width: 1px;
+    display: -webkit-box;
+}
+
 .remove {
     display: -webkit-box;
     background: url(icons/remove.png) no-repeat;
@@ -65,8 +82,11 @@ body {
     width: 40px;
     height: 35px;
     right: 0px;
-    position: absolute;
     cursor: pointer;
+    float: right;
+    margin-bottom: -25px;
+    margin-top: -40px;
+    margin-right: 5px;
 }
 
 .remove:hover {
@@ -118,7 +138,7 @@ body {
 li {
     padding: 5px;
     border-bottom: 1px solid #eee;
-    display: inline-flex;
+    display: list-item;
     width: 100%;
     min-width: 190px;
 }
@@ -163,16 +183,16 @@ ul:empty::after {
 .haveNewPosts::before {
     position: absolute;
     background: #f25;
-    height: 20px;
-    left: -1px;
-    width: 20px;
+    height: 15px;
+    left: -2px;
+    width: 15px;
     text-align: center;
-    line-height: 20px;
-    font-size: 15px;
-    border-radius: 50%;
+    line-height: 15px;
+    font-size: 11px;
+    border-radius: 35%;
     color: white;
-    border: 3px solid white;
-    margin-top: -5px;
+    border: 2px solid white;
+    margin-top: -7px;
 }
 
 .haveNewPosts {
@@ -183,34 +203,65 @@ ul:empty::after {
     content: "1";
 }
 
-.np2::after {
+.np2::before {
     content: "2";
 }
 
-.np3::after {
+.np3::before {
     content: "3";
 }
 
-.np4::after {
+.np4::before {
     content: "4";
 }
 
-.np5::after {
+.np5::before {
     content: "5";
 }
-#totalDiv{
-	    text-align: right;
+
+.np6::before {
+    content: "6";
 }
-#total{
-	vertical-align: middle;
+
+.np7::before {
+    content: "7";
+}
+
+.np8::before {
+    content: "8";
+}
+
+.np9::before {
+    content: "9";
+}
+
+.np10::before {
+    content: "...";
+}
+
+#totalDiv {
+    text-align: right;
+}
+
+#total {
+    vertical-align: middle;
     font-size: 12px;
     color: #9f9b9b;
 }
-#total::after{
-	content: ' total';
+
+#total::after {
+    content: ' total';
 }
-#total:empty{
-	content: '0';
+
+#total:empty {
+    content: '0';
+}
+
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+    display: none;
 }
 </style>
 <script type="text/javascript" src='scripts/action.js'></script>
@@ -218,11 +269,11 @@ ul:empty::after {
     <a id="logo"></a>
     <div id='header'>
         <a id='title'>GAG AWESOME</a>
-        <a id='hi'>Lets make 9GAG great again!</a>
+        <input type="search" id='filter' placeholder="Filter your subscriptions here">
     </div>
     <ul id='subscriptionsList'>
     </ul>
 </div>
 <div id="totalDiv">
-	<a id="total"></a>
+    <a id="total"></a>
 </div>

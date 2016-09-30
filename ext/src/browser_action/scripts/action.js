@@ -28,14 +28,16 @@ var find = function(array, val) {
     return found;
 };
 
-var removeNewPosts = function(user){
-        chrome.storage.sync.get(user, function(obj) {
-        if (obj && obj.user) {
-            obj.newPosts = [];
+var removeNewPosts = function(user) {
+    chrome.storage.local.get(user, function(obj) {
+        var keys = Object.keys(obj);
+        var item = obj[keys[0]];
+        if (item && item.user) {
+            item.newPosts = [];
 
             var subscription = {};
-            subscription[user] = obj;
-            chrome.storage.sync.set(subscription);
+            subscription[user] = item;
+            chrome.storage.local.set(subscription);
         }
     })
 }
@@ -43,97 +45,117 @@ var removeNewPosts = function(user){
 window.onload = function() {
     var ul = document.getElementById('subscriptionsList');
     var total = document.getElementById('total');
+    var filter = document.getElementById('filter');
+
+    filter.onkeyup = function() {
+        var filter = this.value.toUpperCase();
+        var lis = document.getElementsByTagName('li');
+        for (var i = 0; i < lis.length; i++) {
+            var id = lis[i].id;
+            if (id.toUpperCase().indexOf(filter) != -1)
+                lis[i].style.display = 'list-item';
+            else
+                lis[i].style.display = 'none';
+        }
+    }
+
+
+
+
+
     while (ul.firstChild) {
         ul.removeChild(ul.firstChild);
     }
-    chrome.storage.sync.get(null, function(items) {
+    chrome.storage.local.get(null, function(items) {
         var allKeys = Object.keys(items);
-        total.text = allKeys.length - 1;
+        total.text = allKeys.length
+ - 1;
 
 
         for (var i = allKeys.length - 1; i >= 0; i--) {
             var userItem = items[allKeys[i]];
             userItem.user = allKeys[i];
 
-                var listItem = document.createElement("li");
-                listItem.id = userItem.user;
-                listItem.className = 'item';
+            var listItem = document.createElement("li");
+            listItem.id = userItem.user;
+            listItem.className = 'item';
 
-                item = document.createElement("a");
-                item.className = 'itemRef';
-                item.href = userItem.ref;
+            item = document.createElement("a");
+            item.className = 'itemRef';
+            item.href = userItem.ref;
 
-                if (userItem.newPosts && userItem.newPosts.length) {
+            if (userItem.newPosts && userItem.newPosts.length) {
 
-                    item.newPosts = userItem.newPosts;
-                    item.user = userItem.user;
-                    listItem.className += ' haveNewPosts'
-                    listItem.className += ' np' + userItem.newPosts.length;
-                    item.onclick = function(e) {
+                item.newPosts = userItem.newPosts;
+                item.user = userItem.user;
+                listItem.className += ' haveNewPosts'
+                listItem.className += ' np' + (userItem.newPosts.length > 9 ? 10 : userItem.newPosts.length);
+                item.onclick = function(e) {
 
-                        removeNewPosts(this.user);
+                    removeNewPosts(this.user);
 
-                        this.newPosts.forEach(function(postId) {
-                            chrome.tabs.create({
-                                active: true,
-                                url: 'http://9gag.com/gag/' + postId
-                            });
-                        });
-                    };
-                } else {
-                    item.onclick = function(e) {
+                    this.newPosts.forEach(function(postId) {
                         chrome.tabs.create({
                             active: true,
-                            url: e.target.closest('.itemRef').href + '/posts'
+                            url: 'http://9gag.com/gag/' + postId
                         });
-                    };
-                }
+                    });
+                };
+            } else {
+                item.onclick = function(e) {
+                    chrome.tabs.create({
+                        active: true,
+                        url: e.target.closest('.itemRef').href + '/posts'
+                    });
+                };
+            }
 
-                listItem.appendChild(item);
+            listItem.appendChild(item);
 
-                var itemContent = document.createElement("div");
-                itemContent.className = 'itemContent';
-                item.appendChild(itemContent);
+            var itemContent = document.createElement("div");
+            itemContent.className = 'itemContent';
+            item.appendChild(itemContent);
 
-                var user = document.createElement("div");
-                user.className = 'user';
-                itemContent.appendChild(user);
+            var user = document.createElement("div");
+            user.className = 'user';
+            itemContent.appendChild(user);
 
-                var img = document.createElement("img");
-                img.className = 'avatar';
-                img.src = userItem.avatar;
-                user.appendChild(img);
+            var img = document.createElement("img");
+            img.className = 'avatar';
+            img.src = userItem.avatar;
+            user.appendChild(img);
 
-                var date = document.createElement("div");
-                date.className = 'date';
-                itemContent.appendChild(date);
+            var date = document.createElement("div");
+            date.className = 'date';
+            itemContent.appendChild(date);
 
-                var dateA = document.createElement("a");
-                dateA.text = getTextAgo(new Date(userItem.date));
-                date.appendChild(dateA);
+            var dateA = document.createElement("a");
+            dateA.text = getTextAgo(new Date(userItem.date));
+            date.appendChild(dateA);
 
-                var remove = document.createElement("a");
-                remove.className = 'remove';
+            var remove = document.createElement("a");
+            remove.className = 'remove';
 
-                remove.onclick = function(e) {
-                    var id = e.target.parentElement.id;
-                    chrome.storage.sync.remove(id);
-                    e.target.parentElement.remove();
-                    var total = document.getElementById('total');
-                    var count = parseInt(total.text);        
-                                total.text= count -1;
-                }
-                listItem.appendChild(remove);
+            remove.onclick = function(e) {
+                var id = e.target.parentElement.id;
+                chrome.storage.local.remove(id);
+                e.target.parentElement.remove();
+                var total = document.getElementById('total');
+                var count = parseInt(total.text);
+                total.text = count - 1;
+            }
+            listItem.appendChild(remove);
 
-                var a = document.createElement("a");
-                a.text = userItem.user;
-                user.appendChild(a);
+            var a = document.createElement("a");
+            a.text = userItem.user;
+            a.className = 'userName'
+            user.appendChild(a);
 
-                if (userItem.newPosts && userItem.newPosts.length && ul.firstChild) {
-                    ul.insertBefore(listItem, ul.firstChild);
-                } else {
-                    ul.appendChild(listItem);
-                }
-            }        
+            if (userItem.newPosts && userItem.newPosts.length && ul.firstChild) {
+                ul.insertBefore(listItem, ul.firstChild);
+            } else {
+                ul.appendChild(listItem);
+            }
+        }
     });
 }

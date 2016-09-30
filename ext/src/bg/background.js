@@ -10,7 +10,7 @@ var reqCount;
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     if (request.method == "subcribeToUser") {
 
-        chrome.storage.sync.get(request.user, function(obj) {
+        chrome.storage.local.get(request.user, function(obj) {
             if (!obj.ref) {
                 var xhr = new XMLHttpRequest();
                 xhr.open('GET', 'http://9gag.com/u/' + request.user + '/posts');
@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                             'avatar': request.avatar,
                             'posts': JSON.parse(xhr.response).ids
                         };
-                        chrome.storage.sync.set(subscription);
+                        chrome.storage.local.set(subscription);
                     } else {
                         console.log('Something went wrong :(.  9GAG Returned status of ' + xhr.status);
                     }
@@ -66,12 +66,12 @@ var notify = function(id, newPosts) {
 }
 
 checkServer = function() {
-    chrome.storage.sync.get(null, function(items) {
+    chrome.storage.local.get(null, function(items) {
         var allKeys = Object.keys(items);
 
 
         for (var i = allKeys.length - 1; i >= 0; i--) {
-            var item = items[i];
+            var item = items[allKeys[i]];
             item.user = allKeys[i];
 
             var xhr = new XMLHttpRequest();
@@ -84,6 +84,7 @@ checkServer = function() {
 
             xhr.onload = function() {
                 if (this.status === 200) {
+                    var item = this.item;
                     var newIds = JSON.parse(this.response).ids;
                     var newPosts = newIds.filter(function(id) {
                         return item.posts.indexOf(id) === -1;
@@ -102,7 +103,8 @@ checkServer = function() {
 
                     var subscription = {};
                     subscription[item.user] = item;
-                    chrome.storage.sync.set(subscription);
+                    chrome.storage.local.set(subscription);
+
                 } else {
                     console.log('Something went wrong :(.  9GAG Returned status of ' + this.status + ' awesomeIndex ' + awesomeIndex);
                 }
@@ -113,7 +115,7 @@ checkServer = function() {
 
 chrome.alarms.create("checkServer", {
     delayInMinutes: 0.1,
-    periodInMinutes: 2
+    periodInMinutes: 5
 });
 
 chrome.alarms.onAlarm.addListener(function(alarm) {
