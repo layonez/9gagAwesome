@@ -1,0 +1,1 @@
+var s=document.createElement("script");s.src=chrome.extension.getURL("src/myscript.js"),s.onload=function(){this.remove()},s.setAttribute("extensionId",chrome.runtime.id),s.setAttribute("id","9gagAwersome"),window.addEventListener("subcribeToUser",function(a){chrome.runtime.sendMessage(a.detail)},!1),(document.head||document.documentElement).appendChild(s);
